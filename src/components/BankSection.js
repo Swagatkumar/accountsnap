@@ -61,7 +61,7 @@ function BankSection({uid}) {
 
     useEffect(() => {
         if(accountObj){
-            dispatch(setAccountIdList(accountObj.accountIdList))
+            dispatch(setAccountIdList(accountObj.accountIdList.map(id=>decrypt(id))))
             if(accountObj.total!==undefined){
                 dispatch(setTotal(decrypt(accountObj.total)))
             }
@@ -77,10 +77,10 @@ function BankSection({uid}) {
     }
 
     const deleteAccountClicked = (accountIdRef,bal) => {
-        const ref = db.collection(uid).doc("bank-accounts").collection(accountIdRef).doc("account")
+        const ref = db.collection(uid).doc("bank-accounts").collection(encrypt(accountIdRef)).doc("account")
         ref.delete().then(()=>{
             db.collection(uid).doc("bank-accounts").update({
-                accountIdList: accountIdList.filter(accountIds=>accountIds!==accountIdRef),
+                accountIdList: accountIdList.filter(accountIds=>accountIds!==accountIdRef).map(id=>encrypt(id)),
                 total: encrypt((parseFloat(total)-parseFloat(bal)).toFixed(2))
             })
         })
@@ -88,14 +88,13 @@ function BankSection({uid}) {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        const list = [...accountIdList,accountId]
-        setAccountIdList(list)
+        const list = [...accountIdList.map(id=>encrypt(id)),encrypt(accountId)]
         db.collection(uid).doc("bank-accounts").set({
             accountIdList: list
         })
-        db.collection(uid).doc("bank-accounts").collection(accountId).doc("account").set({
-            accountId,
-            bankName,
+        db.collection(uid).doc("bank-accounts").collection(encrypt(accountId)).doc("account").set({
+            accountId: encrypt(accountId),
+            bankName: encrypt(bankName),
             balance: encrypt(parseFloat(balance).toFixed(2))
         }).then(()=>{
             db.collection(uid).doc("bank-accounts").update({
@@ -107,7 +106,7 @@ function BankSection({uid}) {
 
     const onEditAmount = (value,id,bal) => {
         const val = parseFloat(value)-parseFloat(bal)
-        db.collection(uid).doc("bank-accounts").collection(id).doc("account").update({
+        db.collection(uid).doc("bank-accounts").collection(encrypt(id)).doc("account").update({
             balance: encrypt(parseFloat(value).toFixed(2))
         }).then(()=>{
             db.collection(uid).doc("bank-accounts").update({

@@ -5,7 +5,7 @@ import { IconButton, makeStyles, Modal, Tooltip } from '@material-ui/core';
 import { CloseOutlined, Delete } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { setBalanceList } from '../redux/bankSectionSlice';
-import { decrypt } from './CipherConstants';
+import { decrypt, encrypt } from './CipherConstants';
 
 //Design for modal box
 function getModalStyle() {
@@ -41,7 +41,7 @@ function Bank({uid,accountId,onDelete,onEditAmount}) {
     const dispatch = useDispatch()
     
     useEffect(() => {
-        const ref = db.collection(uid).doc("bank-accounts").collection(accountId).doc("account").onSnapshot(snapshot=>{
+        const ref = db.collection(uid).doc("bank-accounts").collection(encrypt(accountId)).doc("account").onSnapshot(snapshot=>{
             if(snapshot.data()){
                 setBankObj(snapshot.data())
             }
@@ -79,8 +79,8 @@ function Bank({uid,accountId,onDelete,onEditAmount}) {
 
     const editBankName = () => {
         if(isNaN(parseFloat(value))&&value!==''){
-            db.collection(uid).doc("bank-accounts").collection(accountId).doc("account").update({
-                bankName: value
+            db.collection(uid).doc("bank-accounts").collection(encrypt(accountId)).doc("account").update({
+                bankName: encrypt(value)
             })
         }
         setValue('')
@@ -91,11 +91,11 @@ function Bank({uid,accountId,onDelete,onEditAmount}) {
         return(
             <div className="shadow-sm mb-3 bg-white rounded">
                 <div className="card-header">
-                    <span style={{fontWeight:"500"}} className="text-warning">Account Id: </span><b>{bankObj.accountId}</b>
+                    <span style={{fontWeight:"500"}} className="text-warning">Account Id: </span><b>{accountId}</b>
                 </div>
                 <div className="card-body">
                     <div>
-                        <span>Bank Name: </span>{bankObj.bankName}
+                        <span>Bank Name: </span>{decrypt(bankObj.bankName)}
                     </div>
                     <div>
                         <span>Balance: </span>{decrypt(bankObj.balance)}

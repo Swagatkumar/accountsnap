@@ -22,12 +22,15 @@ export const bankSectionSlice = createSlice({
         setBalanceList: (state, action) => {
             state.balanceList[action.payload[0]] = action.payload[1]
         },
+        resetBalanceList: (state, action) => {
+            state.balanceList = action.payload
+        },
         setCash: (state,action) => {
             state.cash = action.payload
         }
     }
 })
 
-export const {setAccountIdList,setAccountObj,setTotal,setBalanceList,setCash} = bankSectionSlice.actions
+export const {setAccountIdList,setAccountObj,setTotal,setBalanceList,setCash,resetBalanceList} = bankSectionSlice.actions
 
 export default bankSectionSlice.reducer

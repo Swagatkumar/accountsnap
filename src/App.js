@@ -6,11 +6,13 @@ import Dashboard from './components/Dashboard';
 import Navbar from './components/Navbar';
 import Signup from './components/Signup';
 import { auth } from './firebase';
+import { resetBalanceList, setAccountIdList, setAccountObj, setBalanceList, setCash, setTotal } from './redux/bankSectionSlice';
 
 function App() {
 
   const [user, setUser] = useState(null)
   const [uid, setUid] = useState('uid')
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const authObserver = auth.onAuthStateChanged((user) => {
@@ -25,6 +27,11 @@ function App() {
   const logoutClicked = () => {
     auth.signOut().then(()=>{
       setUid("uid")
+      dispatch(setAccountIdList(undefined))
+      dispatch(resetBalanceList({}))
+      dispatch(setAccountObj(null))
+      dispatch(setCash(undefined))
+      dispatch(setTotal(undefined))
     }).catch(()=>{
       console.log("Trouble logging out")
     })

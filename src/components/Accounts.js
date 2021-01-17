@@ -197,7 +197,7 @@ function Account({uid,type,location}) {
             }else{
                 if(type==='Expense'){
                     const afterExpenseBalance = (parseFloat(balanceList[mode])-parseFloat(amount)).toFixed(2)
-                    db.collection(uid).doc("bank-accounts").collection(mode).doc("account").update({
+                    db.collection(uid).doc("bank-accounts").collection(encrypt(mode)).doc("account").update({
                         balance: encrypt(afterExpenseBalance)
                     }).then(()=>{
                         dispatch(setBalanceList([mode,afterExpenseBalance]))
@@ -210,7 +210,7 @@ function Account({uid,type,location}) {
                     })
                 }else{
                     const afterIncomeBalance = (parseFloat(balanceList[mode])+parseFloat(amount)).toFixed(2)
-                    db.collection(uid).doc("bank-accounts").collection(mode).doc("account").update({
+                    db.collection(uid).doc("bank-accounts").collection(encrypt(mode)).doc("account").update({
                         balance: encrypt(afterIncomeBalance)
                     }).then(()=>{
                         dispatch(setBalanceList([mode,afterIncomeBalance]))
