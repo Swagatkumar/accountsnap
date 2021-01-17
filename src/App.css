@@ -1,0 +1,107 @@
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(20px + 2vmin);
+  color: white;
+}
+
+.app{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding:20px;
+  position: sticky;
+  top:0;
+  background-color: #282c34;
+  z-index: 1;
+}
+
+.body{
+  flex: 1;
+  display: flex;
+  background-color: #e9e9e9;
+}
+
+.body-left{
+  flex: 0.6;
+  padding: 20px;
+  flex-direction: column;
+  display: flex;
+}
+
+.body-right{
+  flex: 0.4;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.body-left-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #282c34;
+  color: lightgray;
+  border-radius: 5px;
+}
+
+.body-left-body{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 10px 20px;
+}
+
+.bank-section-body{
+  margin: 20px;
+}
+
+.card-header{
+  background-color: #f0f0f0;
+}
+
+.card-body{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cash-section{
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cash-header{
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link{
+  text-decoration: none;
+}
+
+.nav-links{
+  margin-right: 20px;
+  border:none;
+  display: flex;
+  align-items: center;
+}
+
+.add-income{
+  background-color: white;
+}

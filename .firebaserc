@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "my-expensetracker"
+  },
+  "targets": {
+    "my-expensetracker": {
+      "hosting": {
+        "accountsnap": [
+          "accountsnap"
+        ]
+      }
+    }
+  }
+}
